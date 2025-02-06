@@ -83,7 +83,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_
 2. [Get](/api/resources/zero_trust/subresources/access/subresources/applications/methods/list/) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
 
 ```bash title="cURL command"
-curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 | jq '.result[] | select(.type == "dash_sso")'
 ```
@@ -102,7 +102,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
 
 ```bash title="cURL command"
 curl --request PUT \
-'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
@@ -147,7 +147,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors
 
 ```bash title="cURL command"
 curl --request PATCH \
-'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828' \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
