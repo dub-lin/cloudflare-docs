@@ -12,6 +12,8 @@ import {
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
+	Tabs,
+	TabItem
 } from "~/components";
 
 <Description>
@@ -23,6 +25,45 @@ Create a global, low-latency, key-value data storage.
 <Plan type="workers-all" />
 
 Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency.
+
+Workers KV is ideal for projects that require:
+
+- High volumes of reads and/or repeated reads to the same keys.
+- Per-object time-to-live (TTL).
+- Distributed configuration.
+
+For example, you can use Workers KV for:
+
+- Caching API responses
+- Storing user configurations / preferences
+- Storing user authentication details
+
+<Tabs>
+<TabItem label="index.ts">
+```ts
+export interface Env {
+	BINDING_NAME: KVNamespace;
+  }
+
+export default {
+  async fetch(request, env, ctx): Promise < Response > {
+    await env.BINDING_NAME.put("KEY", "VALUE");
+    const value = await env.BINDING_NAME.get("KEY");
+    const allKeys = await env.BINDING_NAME.list();
+    await env.BINDING_NAME.delete("KEY");
+    return new Response(JSON.stringify({
+        value: value,
+        allKeys: allKeys
+      }), {
+        headers: {
+          "A":"B"
+        });
+    },
+  }
+  satisfies ExportedHandler < Env > ;
+```
+</TabItem>
+</Tabs>
 
 ---
 
