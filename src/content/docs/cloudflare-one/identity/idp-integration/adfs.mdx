@@ -106,6 +106,11 @@ To create Claim Rules:
 
 6. Select **E-mail-Addresses** from the **LDAP Attribute** and **Outgoing Claim Type** drop-down lists.
 
+:::note[AD FS groups]
+
+If you wish to use AD FS groups in your SAML claims, use `token-groups - unqualified names` instead of `is-member-of-DL`. Using `is-member-of-DL` will display the group in the form of LDAP paths, whereas `token-groups - unqualified names` will return only the group name.
+:::
+
 7. Select **OK**. You return to the **Choose Rule Type** step.
 
 8. Select **Transform an Incoming Claim** from the **Claim rule template** drop-down list to create the second rule.
@@ -125,11 +130,6 @@ To create Claim Rules:
 15. Select **OK**.
 
 Both Claim Rules are now available to export to your Cloudflare Access account.
-
-:::note
-
-If you wish to use AD FS groups in your SAML claims, use `token-groups - unqualified names` instead of `is-member-of-DL`.
-:::
 
 ## Export the certificate
 
