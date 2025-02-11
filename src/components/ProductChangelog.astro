@@ -3,7 +3,6 @@ import { getEntry, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
 import { getChangelogs } from "~/util/changelogs";
 import AnchorHeading from "~/components/AnchorHeading.astro";
-import { entryToString } from "~/util/container";
 
 const page = await getEntry("docs", Astro.params.slug!);
 
@@ -76,57 +75,27 @@ if (!changelogs) {
 }
 {
 	changelogs.map(([date, entries]) => (
-		<div data-date={date}>
+		<div>
+			<AnchorHeading depth={2} title={date} />
 			{(entries ?? []).map(async (entry) => {
-				let description;
-				if (entry.individual_page) {
-					const link = entry.individual_page;
-
-					if (!link)
-						throw new Error(
-							`Changelog entry points to individual page but no link is provided`,
-						);
-
-					const page = await getEntry("docs", link.slice(1, -1));
-
-					if (!page)
-						throw new Error(
-							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
-						);
-
-					description = (await entryToString(page, Astro.locals)) ?? page.body;
-
-					return (
+				return (
+					<>
 						<div data-product={entry.product.toLowerCase()}>
-							<a href={entry.individual_page} class="no-underline">
-								<AnchorHeading depth={2} title={page.data.title} />
-							</a>
-							<p class="text-xs">{entry.date}</p>
 							{page.data.changelog_product_area_name && (
 								<h3 class="!mt-4">
 									<a href={entry.productLink}>{entry.product}</a>
 								</h3>
 							)}
-							{<Fragment set:html={description} />}
-						</div>
-					);
-				} else {
-					description = marked.parse(entry.description as string);
-					return (
-						<>
-							<AnchorHeading depth={2} title={date} />
-							<div data-product={entry.product.toLowerCase()}>
-								{page.data.changelog_product_area_name && (
-									<h3 class="!mt-4">
-										<a href={entry.productLink}>{entry.product}</a>
-									</h3>
+							{entry.title && <strong>{entry.title}</strong>}
+							<Fragment
+								set:html={marked.parse(
+									entry.description ??
+										`Refer to the dedicated page for [${entry.title}](${entry.link})`,
 								)}
-								{entry.title && <strong>{entry.title}</strong>}
-								{<Fragment set:html={description} />}
-							</div>
-						</>
-					);
-				}
+							/>
+						</div>
+					</>
+				);
 			})}
 		</div>
 	))

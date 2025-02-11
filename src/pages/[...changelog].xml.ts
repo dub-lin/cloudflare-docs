@@ -2,7 +2,7 @@ import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from "astro";
 import { marked, type Token } from "marked";
-import { getWranglerChangelog } from "~/util/changelogs";
+import { getWARPReleases, getWranglerChangelog } from "~/util/changelogs";
 import { slug } from "github-slugger";
 import { entryToString } from "~/util/container";
 
@@ -58,6 +58,14 @@ export const GET: APIRoute = async (context) => {
 
 	if (entry.data.changelog_file_name?.includes("wrangler")) {
 		changelogs.push(await getWranglerChangelog());
+	}
+
+	const warpIdx = changelogs.findIndex((e) => e.id === "warp");
+
+	if (warpIdx !== -1) {
+		const releases = await getWARPReleases();
+
+		changelogs[warpIdx].data.entries.push(...releases);
 	}
 
 	const mapped = await Promise.all(

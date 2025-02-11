@@ -29,6 +29,14 @@ export async function getChangelogs(opts?: {
 		changelogs = changelogs.filter((x) => x.id !== "api-deprecations");
 	}
 
+	const warpIdx = changelogs.findIndex((e) => e.id === "warp");
+
+	if (warpIdx !== -1) {
+		const releases = await getWARPReleases();
+
+		changelogs[warpIdx].data.entries.push(...releases);
+	}
+
 	const products = [...new Set(changelogs.flatMap((x) => x.data.productName))];
 	const productAreas = [
 		...new Set(changelogs.flatMap((x) => x.data.productArea)),
@@ -102,4 +110,21 @@ export async function getWranglerChangelog(): Promise<
 			}),
 		},
 	};
+}
+
+export async function getWARPReleases(): Promise<
+	CollectionEntry<"changelogs">["data"]["entries"]
+> {
+	const releases = await getCollection("warp-releases");
+
+	return releases.map(({ data }) => {
+		const date = data.releaseDate.toISOString().substring(0, 10);
+
+		return {
+			publish_date: date,
+			title: `WARP client for ${data.platformName} (version ${data.version})`,
+			link: `/cloudflare-one/changelog/warp/#${date}`,
+			description: data.releaseNotes,
+		};
+	});
 }
