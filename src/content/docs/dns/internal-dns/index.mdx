@@ -54,6 +54,24 @@ flowchart LR
 
 Each DNS view is a logical grouping of internal DNS zones. Internal DNS zones can either contain the DNS records that should be used to resolve an internal DNS query or reference another internal zone that contains such record.
 
+```mermaid
+flowchart LR
+        accTitle: Internal DNS views and zones
+        accDescr: Diagram exemplifying Internal DNS views and zones relationship
+        subgraph Internal DNS
+        subgraph View 111 - London
+        Y[example.com <br /> Zone 200]
+				Z[example.net <br /> Zone 201]
+        end
+        subgraph View 110 - San Francisco
+        X[example.local <br /> Zone 301]
+				B[example.net <br /> Zone 300]
+				S[local <br /> Zone 302]
+        end
+				W[net <br /> Zone 501]
+				end
+```
+
 ## Features
 
 ## Related products
