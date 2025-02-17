@@ -5,15 +5,40 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Details, Example } from "~/components";
 
 Follow this guide to get started with Internal DNS.
 
-:::note
-This process is currently only available via API.
-:::
+Although there are some steps that can be achieved on the dashboard, currently the whole process can only be completed via API.
 
 ## Before you begin
+
+:::note
+Internal DNS is currently in closed beta. Using it on production traffic is at your own risk. If you are interested in this product, contact your account team.
+:::
+
+- Make sure you have an Enterprise account with access to [Cloudflare Gateway](/cloudflare-one/policies/gateway/) and [Internal DNS](/dns/internal-dns/).
+- If you are not familiar with how to use Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
+- If you will be using an API token for authentication, make sure you have the following permissions:
+
+<Details header="API token configuration">
+<Example>
+**Permissions**
+- *Account* - *DNS Views* - *Edit*
+- *Zone* - *DNS* - *Edit*
+- *Account* - *Account Settings* - *Edit*
+- *Zone* - *DNS Settings* - *Edit*
+- *Zone* - *Zone* - *Edit*
+
+**Account Resources**
+- *Include* - *(Your account)*
+
+**Zone Resources**
+- *Include* - *All zones*
+
+</ Example>
+</ Details>
+
 
 ## 1. Set up your internal DNS zone
 
