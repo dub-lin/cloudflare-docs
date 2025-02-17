@@ -414,4 +414,8 @@ Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn mor
 
 ### `PRAGMA optimize`
 
-Attempts to optimize the the database by running various maintenance operations. This statement runs `ANALYZE` if needed, which updates SQLite's internal statistics to improve query planning and makes better decisions on index usage.
+Attempts to optimize all schemas in a database by running various maintenance operations.
+
+We recommend running this command after creating an index.
+
+Refer to [SQLite PRAGMA optimize documentation](https://www.sqlite.org/pragma.html#pragma_optimize) for more information on how the command optimizes a database.
