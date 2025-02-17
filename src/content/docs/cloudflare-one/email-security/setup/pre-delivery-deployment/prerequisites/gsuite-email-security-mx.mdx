@@ -15,33 +15,36 @@ In this tutorial, you will learn how to configure Google Workspace with Email Se
 
 ## 1. Set up Inbound Email Configuration
 
-On the [Google administrative console](https://admin.google.com/), set up [Inbound Email Configuration](https://support.google.com/a/answer/60730?hl=en) with the following details:
+Set up [Inbound Email Configuration](https://support.google.com/a/answer/60730?hl=en) with the following details:
     - In **Gateway IPs**, select the **Add** link, and add the IPs mentioned in [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/).
     - Select **Automatically detect external IP (recommended)**.
     - Select **Require TLS for connections from the email gateways listed above**.
+    - Select **SAVE**.
 
 ## 2. Set up an email quarantine
 
-[Set up an email quarantine](https://support.google.com/a/answer/6104172?hl=en#:~:text=Sign%20in%20with%20an%20administrator,t%20access%20the%20Admin%20console.&text=Manage%20quarantines.,Click%20Add%20Quarantine.):
-    - In the quarantine configuration pop-up, enter the following details:
-        1. **Name**: Email Security Malicious.
-        2. **Description**: Email Security Malicious.
-        3. For the **Inbound denial consequence**, select **Drop message**.
-        4. For the **Outbound denial consequence**, select **Drop message**.
+[Set up an email quarantine](https://support.google.com/a/answer/6104172?hl=en#:~:text=Sign%20in%20with%20an%20administrator,t%20access%20the%20Admin%20console.&text=Manage%20quarantines.,Click%20Add%20Quarantine.) with the following details:
+        - **Name**: Email Security Malicious.
+        - **Description**: Email Security Malicious.
+        - For the **Inbound denial consequence**, select **Drop message**.
+        - For the **Outbound denial consequence**, select **Drop message**.
+        - Select **SAVE**.
+
+To access the newly create quarantine, select **GO TO ADMIN QUARANTINE** or access the quarantine directly by pointing your browser to https://email-quarantine.google.com/adminreview.
 
 ## 3. Create a content compliance filter
 
-Create a [content compliance filter](https://support.google.com/a/answer/1346934?hl=en#zippy=%2Cstep-go-to-gmail-compliance-settings-in-the-google-admin-console%2Cstep-enter-email-messages-to-affect) to send malicious messages to quarantine:
-    - **Name**: `Quarantine Email Security Malicious`.
-    - **In 1**: Email message to affect, select **Inbound**.
-    - **In 2**: **Add expressions that describe the content you want to search for in each message**:
+Go to **Compliance**, and create a [content compliance filter](https://support.google.com/a/answer/1346934?hl=en#zippy=%2Cstep-go-to-gmail-compliance-settings-in-the-google-admin-console%2Cstep-enter-email-messages-to-affect) to send malicious messages to quarantine. Enter the following details:
+    - **Content compliance**: Add `Quarantine Email Security Malicious`.
+    - **Email messages to affect**: Select **Inbound**.
+    - **Add expressions that describe the content you want to search for in each message**:
         - Select **Add** to add the condition.
         - In **Simple content match**, select **Advanced content match**.
         - In **Location**, select **Full headers**.
         - In **Match type**, select **Contains text**.
         - In **Content**, enter `X-EmailSecurity-Disposition: MALICIOUS`.
         - Select **SAVE** to save the condition.
-    - In 3. **If the above expression match, do the following**, select **Quarantine message** and the **Email Security Malicious quarantine** that was created in the previous step.
+    - **If the above expression match, do the following**, select **Quarantine message** and the **Email Security Malicious** quarantine that was created in the previous step.
         - Select **SAVE**.
 
 If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
