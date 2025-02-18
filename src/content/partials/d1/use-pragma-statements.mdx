@@ -414,7 +414,7 @@ Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn mor
 
 ### `PRAGMA optimize`
 
-Attempts to [optimize all schemas]() in a database by running the `ANALYZE` command. `ANALYZE` updates an internal table which contain statistics about tables and indices. These statistics helps the query planner to execute the input query more efficiently.
+Attempts to [optimize all schemas]() in a database by running the `ANALYZE` command for each table, if necessary. `ANALYZE` updates an internal table which contain statistics about tables and indices. These statistics helps the query planner to execute the input query more efficiently.
 
 We recommend running this command after making any changes to the schema (for example, after [creating an index](/d1/best-practices/use-indexes/)).
 
