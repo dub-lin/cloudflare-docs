@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs, Details, Example } from "~/components";
+import { TabItem, Tabs, Details, Example, Render } from "~/components";
 
 Follow this guide to get started with Internal DNS.
 
@@ -13,9 +13,7 @@ Although there are some steps that can be achieved on the dashboard, currently t
 
 ## Before you begin
 
-:::note
-Internal DNS is currently in closed beta. Using it on production traffic is at your own risk. If you are interested in this product, contact your account team.
-:::
+<Render file="internal-dns-beta-note" />
 
 - Make sure you have an Enterprise account with access to [Cloudflare Gateway](/cloudflare-one/policies/gateway/) and [Internal DNS](/dns/internal-dns/).
 - If you are not familiar with how to use Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
@@ -50,7 +48,7 @@ TBD > add partial with requirements from Setup page
 
 2. Add DNS records to your internal zone using your preferred option:
 - [Import](/api/resources/dns/subresources/records/methods/import/) a formatted BIND file. Refer to the [DNS records how-to](/dns/manage-dns-records/how-to/import-and-export/) for guidance.
-- Use other API endpoints to manage DNS records, such as the [batch](/api/resources/dns/subresources/records/methods/batch/) option. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/) for details
+- Use other API endpoints, such as [`/batch`](/api/resources/dns/subresources/records/methods/batch/), to manage DNS records. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api) for details.
 3. Repeat this process for each internal zone you wish to add.
 
 ### (Optional) Reference a zone from another zone
@@ -58,7 +56,7 @@ TBD > add partial with requirements from Setup page
 1. Use the [Update DNS settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to add a reference from an internal zone to another internal zone. In `--data`, specify the `internal_dns` object with the parameter `reference_zone_id`.
 
 <Example>
-In the following example, zone ID `8a904aeb565c42cfa207d98f6edea2f3` is referencing a different zone (ID `8e64c6fb4b514f3faf64de81efc11e51`)
+In the following example, internal zone A (ID `8a904aeb565c42cfa207d98f6edea2f3`) is referencing internal zone B (ID `8e64c6fb4b514f3faf64de81efc11e51`).
 
 TBD > add full API call example using IDs mentioned above
 </ Example>
@@ -76,12 +74,16 @@ TBD > add partial with requirements from Setup page
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **DNS** > **Settings**.
-3. Turn on the option **CNAME flattening for all CNAME records**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
+2. Select **Add a policy** and enter a name and description.
+3. Create an expression for the traffic you wish to route. For guidance about selectors, operators, and values, refer to [Gateway](/cloudflare-one/policies/gateway/resolver-policies/#selectors).
+4. Select **Use DNS view** and choose from the dropdown the name of the view that the query should be sent to.
+5. (Optional) Adjust the option to **fallback through public DNS** according to your use case.
 
 </TabItem> <TabItem label="API">
 
-Make a `PATCH` request to the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint and set `flatten_all_cnames` to `true` in the request body.
+Use the API endpoints under [Zero Trust > Gateway > Rules](/api/resources/zero_trust/subresources/gateway/subresources/rules/) to setup resolver policies. Use the rule settings object to define `resolve_dns_internally`, specifying `view_id` and `fallback` option.
+
+For guidance about selectors, operators, and values, refer to [Gateway](/cloudflare-one/policies/gateway/resolver-policies/#selectors).
 
 </TabItem> </Tabs>
