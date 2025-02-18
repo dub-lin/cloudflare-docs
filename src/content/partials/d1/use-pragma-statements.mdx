@@ -414,8 +414,10 @@ Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn mor
 
 ### `PRAGMA optimize`
 
-Attempts to [optimize all schemas]() in a database by running various maintenance operations. We recommend running this command after [creating an index](/d1/best-practices/use-indexes/).
+Attempts to [optimize all schemas]() in a database by running the `ANALYZE` command. `ANALYZE` updates an internal table which contain statistics about tables and indices. These statistics helps the query planner to execute the input query more efficiently.
 
-Alternatively, to see all optimizations that would have been performed without actually executing them, run `PRAGMA optimize(-1)`.
+We recommend running this command after making any changes to the schema (for example, after [creating an index](/d1/best-practices/use-indexes/)).
 
-Refer to [SQLite PRAGMA optimize documentation](https://www.sqlite.org/pragma.html#pragma_optimize) for more information on how the command optimizes a database.
+{/* Alternatively, to see all optimizations that would have been performed without actually executing them, run `PRAGMA optimize(-1)`. */}
+
+Refer to [SQLite PRAGMA optimize documentation](https://www.sqlite.org/pragma.html#pragma_optimize) for more information on how `PRAGMA optimize` optimizes a database.
