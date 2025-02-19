@@ -1,0 +1,48 @@
+---
+pcx_content_type: how-to
+title: How Guardrails works
+sidebar:
+  order: 3
+---
+
+AI Gateway inspects all interactions in real time by evaluating content against predefined safety parameters. Here’s a breakdown of the process:
+
+1. **Intercepting interactions:**
+   AI Gateway sits between the user and the AI model, intercepting every prompt and response.
+
+2. **Evaluating content:**
+
+   - **User prompts:** When a user sends a prompt, AI Gateway checks it against safety parameters (for example violence, hate, or sexual content). Based on your configuration, the system can either flag the prompt or block it before it reaches the AI model.
+   - **Model responses:** After processing, the AI model’s response is inspected. If hazardous content is detected, it can be flagged or blocked before being delivered to the user.
+
+3. **Model-specific behavior:**
+
+   - **Text generation models:** Both prompts and responses are evaluated.
+   - **Embedding models:** Only the prompt is evaluated, and the response is passed directly back to the user.
+   - **Catalogued models:** If the model type is identifiable, only the prompt is evaluated; the response bypasses Guardrails and is delivered directly.
+
+4. **Real-time observability:**
+   Detailed logs provide visibility into user queries and model outputs, allowing you to monitor interactions continuously and adjust safety parameters as needed.
+
+## Configuration
+
+Within AI Gateway settings, you can tailor the Guardrails feature to your requirements:
+
+- **Guardrails:** Enable or disable content moderation.
+- **Evaluation scope:** Choose to analyse user prompts, model responses, or both.
+- **Hazard categories:** Define specific categories (such as violence, hate, or sexual content) to monitor, and set actions for each category (ignore, flag, or block).
+
+## Leveraging Llama Guard on Workers AI
+
+Guardrails is powered by [**Llama Guard**](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/), Meta’s open-source content moderation tool designed for real-time safety monitoring. AI Gateway uses the [**Llama Guard 3 8B model**](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/), hosted on [**Workers AI**](/workers-ai/) to drive its safety features. This model is continuously updated to adapt to emerging safety challenges.
+
+## Additional considerations
+
+- **Workers AI usage:**
+  Enabling Guardrails incurs usage on Workers AI. Monitor your usage through the Workers AI Dashboard.
+
+- **Latency impact:**
+  Evaluating both the request and the response introduces extra latency. Factor this into your deployment planning.
+
+- **Model availability:**
+  If the underlying model is unavailable, requests that are flagged will proceed; however, requests set to be blocked will result in an error.
