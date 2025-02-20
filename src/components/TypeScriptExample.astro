@@ -57,6 +57,7 @@ if (!code) {
 	);
 }
 
+/* eslint-disable unicorn/prefer-string-replace-all */
 code = code.replaceAll(/\u007F/g, "\n");
 
 const js = await format(tsBlankSpace(code), { parser: "babel", useTabs: true });

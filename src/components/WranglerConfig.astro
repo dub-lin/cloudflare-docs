@@ -24,6 +24,7 @@ if (!code) {
 	);
 }
 
+/* eslint-disable unicorn/prefer-string-replace-all */
 code = code.replaceAll(/\u007F/g, "\n");
 
 const language =
