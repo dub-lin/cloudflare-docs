@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Tabs, TabItem, Render } from '~/components';
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
@@ -14,8 +14,6 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 <Render file="access/one-time-pin-warning" />
 
 ## Set up OTP
-
-import { Tabs, TabItem, Details } from '~/components';
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
