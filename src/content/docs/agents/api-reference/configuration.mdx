@@ -1,0 +1,28 @@
+---
+title: Agents SDK
+pcx_content_type: concept
+sidebar:
+  order: 2
+
+---
+
+import { MetaInfo, Render, Type, WranglerConfig } from "~/components";
+
+This guide details the Agents API within Cloudflare Workers, including methods, types, and usage examples.
+
+## Agent
+
+TODO
+
+The `Agent` class is the core element of a Agent definition:
+
+```ts
+import { Agent } from "@cloudflare/agents";
+
+export class MyAgent extends Agent<Env> {
+	// methods here
+	async onRequest(req: Request) {
+		
+	}
+};
+```

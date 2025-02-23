@@ -1,5 +1,5 @@
 ---
-title: Build agents on Cloudflare
+title: Build Agents on Cloudflare
 type: overview
 pcx_content_type: overview
 sidebar:
@@ -15,6 +15,7 @@ import {
 	Feature,
 	LinkButton,
 	LinkTitleCard,
+	PackageManagers,
 	Plan,
 	RelatedProduct,
 	Render,
@@ -22,14 +23,35 @@ import {
 	Tabs,
 } from "~/components";
 
-Build AI-powered agents that can autonomously perform tasks, persist state, browse the web, and communicate back to users in real-time over any channel.
+Build and deploy AI-powered agents that can autonomously perform tasks, persist state, browse the web, query data and communicate back to users in real-time over any channel.
 
-- **Serverless inference that scales up _and_ down**: run AI directly on Cloudflre, without worrying about pre-provisioning VMs at peak, and worrying about utilization. Call the latest open-source models on [Workers AI](/workers-ai/), and pay just for what you use.
-- **Non I/O bound pricing:** don't pay for long-running processes when your code is not executing. Cloudflare Workers is designed to scale down and [only charge you for CPU time](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), as opposed to wall-clock time.
-- **Designed for durable execution:** [Durable Objects](/durable-objects/) and [Workflows](/workflows) are built for a programming model that enables guaranteed execution for async tasks like long-running deep thinking LLM calls, human-in-the-loop, or unreliable API calls.
-- **Scalable, and reliable, without compromising on performance:** by running on Cloudflare's network, agents can execute tasks close to the user without introducing latency for real-time experiences.
+TODO:
+
+- "/agents is the docs for the agents platform"
+- agents.cloudflare.com / agents.workers.dev (?)
+- vibe check: need to signal on DO pricing
+
+## Why ship an Agent on Cloudflare?
+
+TODO - refine
+
+- **Batteries included**: Want your agent to search the web? Connect it to [Browser Rendering](/browser-rendering/). Store data? Write to the Agent's underlying [Durable Object](/workers/durable-objects/). Query your database? Connect it to your Postgres database [with Hyperdrive](/hyperdrive/). Stream data back in real-time to one, ten or one thousand users at once? Establish a [WebSocket](/workers/websockets/). Feed data to an AI model? Connect it to [Workers AI](/workers-ai/), OpenAI, Gemini, or Anthropic.
+- **Scale to production**: Deploy agents to Cloudflare's global network and let them scale out automatically.
+- **Don't break the bank**: Agents are built on Cloudflare Workers. Only pay when your agents are running.
 
 ## Start building
+
+
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"--", "--template", "cloudflare/agents/starter"}
+/>
+
+Head to the [Agents tutorial[(/getting-started/tutorial/) to dive into shipping your first Agent on Cloudflare.
+
+## Agents platform
 
 <Tabs syncKey="agents-products">
 <TabItem label="Workflows">
